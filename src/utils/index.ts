@@ -69,7 +69,7 @@ export const getArraySum = (array: number[]): number => {
  * getDateTooltip('2023-07-08')
  */
 export const getDateTooltip = (dateString: string) => {
-  const date = getDateDetails(new Date(dateString))
+  const date = getDateDetails(new Date(dateString + 'T00:00'))
   return `${date.date}, ${date.month} ${date.day}, ${date.year}`
 }
 
