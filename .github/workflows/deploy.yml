@@ -1,23 +1,27 @@
 name: Deploy new release to NPM
 
 on:
-  release:
-    types:
-      - 'created'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version'
+        required: true
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.action == 'created'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
           registry-url: https://registry.npmjs.org/
+
+      - name: Update version
+        run: npm version ${{ github.event.inputs.version }} --no-git-tag-version
 
       - name: Install dependencies
         run: npm ci

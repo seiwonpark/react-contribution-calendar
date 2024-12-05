@@ -1,7 +1,7 @@
 {
   "name": "react-contribution-calendar",
   "description": "A GitHub-like contribution calendar component for React",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/types/react-contribution-calendar.d.ts",
@@ -27,10 +27,7 @@
     "calendar",
     "heatmap"
   ],
-  "authors": [
-    "Seiwon Park <psw7347@gmail.com>",
-    "Yaehee Choe <yaehee@kakao.com>"
-  ],
+  "author": "Seiwon Park <psw7347@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/SeiwonPark/react-contribution-calendar/issues"
