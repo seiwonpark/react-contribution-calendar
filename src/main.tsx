@@ -16,6 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       onCellClick={(_, data) => console.log(data)}
       scroll={false}
       style={{}}
+      hideDescription={false}
+      hideMonthLabels={false}
+      hideDayLabels={false}
     />
   </React.StrictMode>
 )

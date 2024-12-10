@@ -21,6 +21,9 @@ interface TableProps {
   onCellClick?: MouseEventHandler
   scroll?: boolean
   style?: CSSProperties
+  hideDayLabels?: boolean
+  hideDescription?: boolean
+  hideMonthLabels?: boolean
 }
 
 export default function Table({
@@ -38,6 +41,9 @@ export default function Table({
   onCellClick = (_, data) => console.log(data),
   scroll = false,
   style,
+  hideDayLabels = false,
+  hideDescription = false,
+  hideMonthLabels = false,
 }: TableProps) {
   const padding = `0 ${cx + 70}px 0 ${cx + 10}px`
 
@@ -53,7 +59,9 @@ export default function Table({
     <div className={styles.container} style={style}>
       <div className={styles.calendar} style={{ padding: padding, overflowX: scroll ? 'scroll' : 'clip' }}>
         <table className={styles.table}>
-          <TableHead start={start} end={end} textColor={textColor} startsOnSunday={startsOnSunday} cy={cy} />
+          {hideMonthLabels === false &&
+            <TableHead start={start} end={end} textColor={textColor} startsOnSunday={startsOnSunday} cy={cy} />
+          }
           <TableBody
             data={data}
             start={start}
@@ -67,10 +75,13 @@ export default function Table({
             cr={cr}
             theme={theme}
             onClick={onCellClick}
+            hideDayLabels={hideDayLabels}
           />
         </table>
       </div>
-      <Description textColor={textColor} cx={cx} cy={cy} cr={cr} theme={theme} />
+      {hideDescription === false &&
+        <Description textColor={textColor} cx={cx} cy={cy} cr={cr} theme={theme} />
+      }
     </div>
   )
 }

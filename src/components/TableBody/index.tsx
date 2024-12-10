@@ -24,6 +24,7 @@ interface TableBodyProps {
   cr: number
   theme: string | ThemeProps
   onClick: MouseEventHandler
+  hideDayLabels?: boolean
 }
 
 export default function TableBody({
@@ -39,6 +40,7 @@ export default function TableBody({
   cr,
   theme,
   onClick,
+  hideDayLabels = false
 }: TableBodyProps) {
   const { year: startYear, day: startDay } = parseDateFromDateString(start)
   const { day: endDay } = parseDateFromDateString(end)
@@ -80,9 +82,11 @@ export default function TableBody({
     <tbody className={styles.tbody}>
       {DATES.map((date, rowIndex) => (
         <tr className={styles.tr} key={`${date}-${rowIndex}`}>
-          <Label tabIndex={0} textColor={textColor} style={{ textAlign: 'left', fontSize: cy, lineHeight: 0 }}>
-            {date}
-          </Label>
+          {hideDayLabels === false &&
+            <Label tabIndex={0} textColor={textColor} style={{ textAlign: 'left', fontSize: cy, lineHeight: 0 }}>
+              {date}
+            </Label>
+          }
           {dayArray[rowIndex].map((day, colIndex) => {
             if (endCol === 0 && colIndex === 1) {
               return (
