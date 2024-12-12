@@ -154,6 +154,30 @@ declare module 'react-contribution-calendar' {
      * ```
      */
     style?: CSSProperties
+    /**
+     * Option for hiding labels of the calendar, defaults to false.
+     * @example
+     * ```tsx
+     * <ContributionCalendar hideDayLabels={true} />
+     * ```
+     */
+    hideDayLabels?: boolean
+    /**
+     * Option for hiding description of the calendar, defaults to false.
+     * @example
+     * ```tsx
+     * <ContributionCalendar hideDescription={true} />
+     * ```
+     */
+    hideDescription?: boolean
+    /**
+     * Option for hiding table head of the calendar, defaults to false.
+     * @example
+     * ```tsx
+     * <ContributionCalendar hideMonthLabels={true} />
+     * ```
+     */
+    hideMonthLabels?: boolean
   }
 
   /**

@@ -63,6 +63,9 @@ const data = [
   onCellClick={(e, data) => console.log(data)}
   scroll={false}
   style={}
+  hideDescription={false}
+  hideMonthLabels={false}
+  hideDayLabels={false}
 />
 ```
 
@@ -107,6 +110,9 @@ const data = [
 - **`cr`**: Optional. The pixel size of border radius of each cell, defaults to `2`.
 - **`scroll`**: Optional. Whether to show scrollbar or not, defaults to `false`.
 - **`onCellClick`**: Optional. An onClick mouse event on each table cell.
+- **`hideDescription`**: Optional. Allows you to hide the description displayed at the bottom of the graph.
+- **`hideMonthLabels`**: Optional. Allows you to hide the month labels displayed at the top of the graph.
+- **`hideDayLabels`**: Optional. ALlows you to hide the day labels displayed at the side of the graph.
 
 <br />
 
