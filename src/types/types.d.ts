@@ -19,9 +19,9 @@ interface InputDataProps {
    * This attribute is for containing any type of object data to embrace various usages.
    *
    * Note: Currently the type `object` might have flexibility but should be reconsidered.
-   * @type {object | undefined}
+   * @type {Record<string, unknown>}
    */
-  data?: object
+  data?: Record<string, unknown>
 }
 
 /**
@@ -30,7 +30,7 @@ interface InputDataProps {
  * of data and any type of object data. The level is used to set the priority of the data.
  */
 interface InputData {
-  [key: string]: InputDataProps
+  [key: string]: InputDataProps | undefined
 }
 
 interface ThemeProps {
