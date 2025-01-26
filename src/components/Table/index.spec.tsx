@@ -74,7 +74,7 @@ describe('components/Table', () => {
       /**
        * index 0: month label
        * index 1: boundary empty cell or cell with data (has no click event)
-       * index 2: cell with data (has no click event)
+       * index 2: cell with data (has click event)
        * So index 2 has been chosen for click event
        */
       await user.click(cellsInBody[2])
