@@ -272,7 +272,7 @@ export const parseInputData = (inputData: InputData[]): Map<string, InputDataPro
 
   inputData.forEach((data) => {
     Object.keys(data).forEach((date) => {
-      parsedData.set(date, data[date])
+      parsedData.set(date, data[date] as InputDataProps)
     })
   })
 

@@ -22,9 +22,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["node_modules/@types", "src/types"]
+    "typeRoots": ["node_modules/@types", "src/types"],
   },
-  "include": ["src", "./vite.config.ts", "src/types"],
+  "include": ["src", "./vite.config.ts", "src/types", "src/setupTest.ts"],
   "exclude": ["node_modules", "**/__tests__/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

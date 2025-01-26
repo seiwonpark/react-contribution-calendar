@@ -5,83 +5,109 @@ import { getCurrentYear, getDateString } from '../../utils'
 import Description from '../Description'
 import styles from './index.module.css'
 import { isValidDateFormat, isValidDateRange, isValidDaysOfTheWeek } from '../../validators'
+import { useMemo } from 'react'
+import { useEffect } from 'react'
 
-interface TableProps {
-  data?: InputData[]
+interface TableDateOptions {
   start?: string
   end?: string
   daysOfTheWeek?: string[]
-  textColor?: string
   startsOnSunday?: boolean
   includeBoundary?: boolean
+}
+
+interface TableStyleOptions {
+  textColor?: string
+  style?: CSSProperties
+  theme?: string | ThemeProps
   cx?: number
   cy?: number
   cr?: number
-  theme?: string | ThemeProps
-  onCellClick?: MouseEventHandler
-  scroll?: boolean
-  style?: CSSProperties
-  hideDayLabels?: boolean
+}
+
+interface TableVisibilityOptions {
   hideDescription?: boolean
   hideMonthLabels?: boolean
+  hideDayLabels?: boolean
+}
+
+interface TableProps {
+  data?: InputData[]
+  dateOptions?: TableDateOptions
+  styleOptions?: TableStyleOptions
+  visibilityOptions?: TableVisibilityOptions
+  onCellClick?: MouseEventHandler
+  scroll?: boolean
 }
 
 export default function Table({
-  data = [],
-  start = getDateString(getCurrentYear(), 0, 1),
-  end = getDateString(getCurrentYear(), 11, 31),
-  daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  textColor = '#1f2328',
-  startsOnSunday = true,
-  includeBoundary = true,
-  cx = 10,
-  cy = 10,
-  cr = 2,
-  theme = 'grass',
+  data,
+  dateOptions,
+  styleOptions,
+  visibilityOptions,
   onCellClick = (_, data) => console.log(data),
   scroll = false,
-  style,
-  hideDayLabels = false,
-  hideDescription = false,
-  hideMonthLabels = false,
 }: TableProps) {
-  const padding = `0 ${cx + 70}px 0 ${cx + 10}px`
+  const start = useMemo(() => dateOptions?.start || getDateString(getCurrentYear(), 0, 1), [dateOptions?.start])
+  const end = useMemo(() => dateOptions?.end || getDateString(getCurrentYear(), 11, 31), [dateOptions?.end])
+  const padding = useMemo(
+    () => `0 ${(styleOptions?.cx || 0) + 70}px 0 ${(styleOptions?.cx || 0) + 10}px`,
+    [styleOptions?.cx]
+  )
+  const startsOnSunday = useMemo(() => dateOptions?.startsOnSunday || true, [dateOptions?.startsOnSunday])
+  const daysOfTheWeek = useMemo(
+    () => dateOptions?.daysOfTheWeek || ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    [dateOptions?.daysOfTheWeek]
+  )
+  const textColor = useMemo(() => styleOptions?.textColor || '#1f2328', [styleOptions?.textColor])
+  const includeBoundary = useMemo(() => dateOptions?.includeBoundary || true, [dateOptions?.includeBoundary])
 
-  isValidDateFormat(start)
-
-  isValidDateFormat(end)
-
-  isValidDateRange(start, end)
-
-  isValidDaysOfTheWeek(daysOfTheWeek)
+  useEffect(() => {
+    isValidDateFormat(start)
+    isValidDateFormat(end)
+    isValidDateRange(start, end)
+    isValidDaysOfTheWeek(daysOfTheWeek)
+  }, [daysOfTheWeek, start, end])
 
   return (
-    <div className={styles.container} style={style}>
-      <div className={styles.calendar} style={{ padding: padding, overflowX: scroll ? 'scroll' : 'clip' }}>
+    <div className={`${styles.base} ${styles.container}`} style={styleOptions?.style}>
+      <div className={styles.calendar} style={{ padding, overflowX: scroll ? 'scroll' : 'clip' }}>
         <table className={styles.table}>
-          {hideMonthLabels === false &&
-            <TableHead start={start} end={end} textColor={textColor} startsOnSunday={startsOnSunday} cy={cy} />
-          }
+          {!visibilityOptions?.hideMonthLabels && (
+            <TableHead
+              start={start}
+              end={end}
+              textColor={textColor}
+              startsOnSunday={startsOnSunday}
+              cy={styleOptions?.cy || 10}
+            />
+          )}
           <TableBody
-            data={data}
+            data={data || []}
             start={start}
             end={end}
             daysOfTheWeek={daysOfTheWeek}
             textColor={textColor}
             startsOnSunday={startsOnSunday}
             includeBoundary={includeBoundary}
-            cx={cx}
-            cy={cy}
-            cr={cr}
-            theme={theme}
+            cx={styleOptions?.cx || 10}
+            cy={styleOptions?.cy || 10}
+            cr={styleOptions?.cr || 2}
+            theme={styleOptions?.theme || 'grass'}
             onClick={onCellClick}
-            hideDayLabels={hideDayLabels}
+            hideDayLabels={visibilityOptions?.hideDayLabels || false}
           />
         </table>
       </div>
-      {hideDescription === false &&
-        <Description textColor={textColor} cx={cx} cy={cy} cr={cr} theme={theme} />
-      }
+      {!visibilityOptions?.hideDescription && (
+        <Description
+          textColor={textColor}
+          cx={styleOptions?.cx || 10}
+          cy={styleOptions?.cy || 10}
+          cr={styleOptions?.cr || 2}
+          theme={styleOptions?.theme || 'grass'}
+        />
+      )}
     </div>
   )
 }

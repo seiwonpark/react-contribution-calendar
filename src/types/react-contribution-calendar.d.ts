@@ -6,6 +6,144 @@
 
 declare module 'react-contribution-calendar' {
   import { FunctionComponent } from 'react'
+
+  /**
+   * Contains date-related configuration options for the calendar
+   */
+  interface TableDateOptions {
+    /**
+     * The starting date of calendar, defaults to 1st January of current year.
+     * `start` date must be earlier than `end` date.
+     * @example
+     * ```tsx
+     * <ContributionCalendar start="2023-04-04" />
+     * ```
+     */
+    start?: string
+
+    /**
+     * The ending date of calendar, defaults to 31st December of current year.
+     * `start` date must be earlier than `end` date.
+     * @example
+     * ```tsx
+     * <ContributionCalendar end="2023-05-19" />
+     * ```
+     */
+    end?: string
+
+    /**
+     * The days of the week, defaults to `['Sun', 'Mon', ... 'Sat']`. The day of the
+     * week should start from Sunday regardless of the `startsOnSunday` option.
+     * The length of the array must be exact `7`.
+     * @example
+     * ```tsx
+     * const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+     *
+     * <ContributionCalendar daysOfTheWeek={daysOfTheWeek} />
+     * ```
+     */
+    daysOfTheWeek?: string[]
+
+    /**
+     * Whether to set calendar start on Sunday or not, defaults to `true`.
+     * If set to false, the week will start on Monday.
+     * @example
+     * ```tsx
+     * <ContributionCalendar startsOnSunday={true} />
+     * ```
+     */
+    startsOnSunday?: boolean
+
+    /**
+     * Whether to include the boundary column or not, defaults to `true`.
+     * @example
+     * ```tsx
+     * <ContributionCalendar includeBoundary={true} />
+     * ```
+     */
+    includeBoundary?: boolean
+  }
+
+  /**
+   * Contains style-related configuration options for the calendar
+   */
+  interface TableStyleOptions {
+    /**
+     * The text color of calendar indexes for months and dates, defaults to `#1F2328`.
+     * @example
+     * ```tsx
+     * <ContributionCalendar textColor="#000" />
+     * ```
+     */
+    textColor?: string
+
+    /**
+     * Root styles for the ContributionCalendar.
+     * @example
+     * ```tsx
+     * <ContributionCalendar style={{ padding: '4px' }} />
+     * ```
+     */
+    style?: CSSProperties
+
+    /**
+     * The name of theme for the ContributionCalendar, defaults to `grass`. Also
+     * `ThemeProps` could be added directly i.e. when trying to use custom theme.
+     * @example
+     * ```tsx
+     * <ContributionCalendar theme="grass" />
+     * ```
+     */
+    theme?: string | ThemeProps
+
+    /**
+     * The size of width of each cell, defaults to `10`px.
+     */
+    cx?: number
+
+    /**
+     * The size of height of each cell, defaults to `10`px.
+     */
+    cy?: number
+
+    /**
+     * The border radius of each cell, defaults to `2`px.
+     */
+    cr?: number
+  }
+
+  /**
+   * Contains visibility configuration options for calendar elements
+   */
+  interface TableVisibilityOptions {
+    /**
+     * Option for hiding description of the calendar, defaults to false.
+     * @example
+     * ```tsx
+     * <ContributionCalendar hideDescription={true} />
+     * ```
+     */
+    hideDescription?: boolean
+
+    /**
+     * Option for hiding table head of the calendar, defaults to false.
+     * @example
+     * ```tsx
+     * <ContributionCalendar hideMonthLabels={true} />
+     * ```
+     */
+    hideMonthLabels?: boolean
+
+    /**
+     * Option for hiding labels of the calendar, defaults to false.
+     * @example
+     * ```tsx
+     * <ContributionCalendar hideDayLabels={true} />
+     * ```
+     */
+    hideDayLabels?: boolean
+  }
+
   /**
    * Returns an object of ThemeProps which could be used as theme attribute of
    * ContributionCalendarProps.
@@ -46,93 +184,20 @@ declare module 'react-contribution-calendar' {
      */
     data?: InputData[]
     /**
-     * The starting date of calendar, defaults to 1st January of current year.
-     * `start` date must be earlier than `end` date.
-     * @example
-     * ```tsx
-     * <ContributionCalendar start="2023-04-04" />
-     * ```
+     * Date-related configuration options
      */
-    start?: string
+    dateOptions?: TableDateOptions
+
     /**
-     * The ending date of calendar, defaults to 31st December of current year.
-     * `start` date must be earlier than `end` date.
-     * @example
-     * ```tsx
-     * <ContributionCalendar end="2023-05-19" />
-     * ```
+     * Style-related configuration options
      */
-    end?: string
+    styleOptions?: TableStyleOptions
+
     /**
-     * The days of the week, defaults to `['Sun', 'Mon', ... 'Sat']`. The day of the
-     * week should start from Sunday regardless of the `startsOnSunday` option.
-     * The length of the array must be exact `7`.
-     * @example
-     * ```tsx
-     * const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-     *
-     * <ContributionCalendar daysOfTheWeek={daysOfTheWeek} />
-     * ```
+     * Visibility configuration options
      */
-    daysOfTheWeek?: string[]
-    /**
-     * The text color of calendar indexes for months and dates, defaults to `#1F2328`.
-     * @example
-     * ```tsx
-     * <ContributionCalendar textColor="#000" />
-     * ```
-     */
-    textColor?: string
-    /**
-     * Whether to set calendar start on Sunday or not, defaults to `true`.
-     * If set to false, the week will start on Monday.
-     * @example
-     * ```tsx
-     * <ContributionCalendar startsOnSunday={true} />
-     * ```
-     */
-    startsOnSunday?: boolean
-    /**
-     * Whether to include the boundary column or not, defaults to `true`.
-     * @example
-     * ```tsx
-     * <ContributionCalendar includeBoundary={true} />
-     * ```
-     */
-    includeBoundary?: boolean
-    /**
-     * The size of width of each cell, defaults to `10`px.
-     * @example
-     * ```tsx
-     * <ContributionCalendar cx={10} />
-     * ```
-     */
-    cx?: number
-    /**
-     * The size of height of each cell, defaults to `10`px.
-     * @example
-     * ```tsx
-     * <ContributionCalendar cy={10} />
-     * ```
-     */
-    cy?: number
-    /**
-     * The border radius of each cell, defaults to `2`px.
-     * @example
-     * ```tsx
-     * <ContributionCalendar cr={2} />
-     * ```
-     */
-    cr?: number
-    /**
-     * The name of theme for the ContributionCalendar, defaults to `grass`. Also
-     * `ThemeProps` could be added directly i.e. when trying to use custom theme.
-     * @example
-     * ```tsx
-     * <ContributionCalendar theme="grass" />
-     * ```
-     */
-    theme?: string | ThemeProps
+    visibilityOptions?: TableVisibilityOptions
+
     /**
      * Click event handler for table cells. This takes `data` as optional value
      * of each cell and returns callback function.
@@ -146,38 +211,6 @@ declare module 'react-contribution-calendar' {
      * Option for showing scrollbar for the calendar table, defaults to false.
      */
     scroll?: boolean
-    /**
-     * Root styles for the ContributionCalendar.
-     * @example
-     * ```tsx
-     * <ContributionCalendar style={{ padding: '4px' }} />
-     * ```
-     */
-    style?: CSSProperties
-    /**
-     * Option for hiding labels of the calendar, defaults to false.
-     * @example
-     * ```tsx
-     * <ContributionCalendar hideDayLabels={true} />
-     * ```
-     */
-    hideDayLabels?: boolean
-    /**
-     * Option for hiding description of the calendar, defaults to false.
-     * @example
-     * ```tsx
-     * <ContributionCalendar hideDescription={true} />
-     * ```
-     */
-    hideDescription?: boolean
-    /**
-     * Option for hiding table head of the calendar, defaults to false.
-     * @example
-     * ```tsx
-     * <ContributionCalendar hideMonthLabels={true} />
-     * ```
-     */
-    hideMonthLabels?: boolean
   }
 
   /**
