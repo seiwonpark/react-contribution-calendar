@@ -12,9 +12,6 @@ A GitHub-like contribution calendar component for React, built with Vite and Typ
 $ npm i react-contribution-calendar
 ```
 
-> **Note**  
-> Add --save if you are using npm < 5.0.0
-
 <br />
 
 ## Demo
@@ -25,48 +22,56 @@ $ npm i react-contribution-calendar
 
 ## Usage
 
-```js
+```jsx
 import { ContributionCalendar } from 'react-contribution-calendar'
 
-const data = [
-  {
-    '2020-04-20': { level: 2 }
-  },
-  {
-    '2023-07-08': { level: 1 },
-  },
-  {
-    '2023-07-09': { level: 4, data: {} },
-  },
-  {
-    '2023-03-31': {
-      level: 3,
-      data: {
-        myKey: 'my data',
+function App() {
+  const data = [
+    {
+      '2020-04-20': { level: 2 }
+    },
+    {
+      '2023-07-08': { level: 1 },
+    },
+    {
+      '2023-07-09': { level: 4, data: {} },
+    },
+    {
+      '2023-03-31': {
+        level: 3,
+        data: {
+          myKey: 'my data',
+        },
       },
     },
-  },
-]
+  ]
 
-<ContributionCalendar
-  data={data}
-  start="2020-04-04"
-  end="2023-05-19"
-  daysOfTheWeek={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']}
-  textColor="#1F2328"
-  startsOnSunday={true}
-  includeBoundary={true}
-  theme="grass"
-  cx={10}
-  cy={10}
-  cr={2}
-  onCellClick={(e, data) => console.log(data)}
-  scroll={false}
-  style={}
-  hideDescription={false}
-  hideMonthLabels={false}
-  hideDayLabels={false}
-/>
+  return (
+    <ContributionCalendar
+      data={data}
+      dateOptions={{
+        start: '2020-04-04',
+        end: '2023-05-19',
+        daysOfTheWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        startsOnSunday: true,
+        includeBoundary: true,
+      }}
+      styleOptions={{
+        theme: 'grass',
+        cx: 10,
+        cy: 10,
+        cr: 2,
+      }}
+      visibilityOptions={{
+        hideDescription: false,
+        hideMonthLabels: false,
+        hideDayLabels: false,
+      }}
+      onCellClick={(e, data) => console.log(data)}
+      scroll={false}
+    />
+  )
+}
 ```
 
 <br />
@@ -98,21 +103,25 @@ const data = [
     ]
     ```
 
-- **`start`**: Optional. The starting date for the calendar to start, defaults to current year's January 1st(`YYYY-MM-DD` format).
-- **`end`**: Optional. The ending date for the calendar to end, defaults to current year's December 31st(`YYYY-MM-DD` format).
-- **`daysOfTheWeek`**: Optional. The days of the week, which will be the head column of each row. The array should start from Sunday so that you can use with `startsOnSunday` option correctly. Defaults to `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`.
-- **`textColor`**: Optional. The color of indexes. String color code format, defaults to `#1F2328`.
-- **`startsOnSunday`**: Optional. Whether to start the calendar on Sunday or not, defaults to `true`. If set to false, calendar will start on Monday.
-- **`includeBoundary`**: Optional. Whether to include the boundary cells in the starting or ending date column, defaults to `true`.
-- **`theme`**: Optional. A string that represents a predefined theme name, or an object with custom theme colors. Defaults to `grass`.
-- **`cx`**: Optional. The pixel size of width of each cell, defaults to `10`.
-- **`cy`**: Optional. The pixel size of height of each cell, defaults to `10`.
-- **`cr`**: Optional. The pixel size of border radius of each cell, defaults to `2`.
+- **`dateOptions`**: Optional. Defines options for date.
+  - **`start`**: Optional. The starting date for the calendar to start, defaults to current year's January 1st(`YYYY-MM-DD` format).
+  - **`end`**: Optional. The ending date for the calendar to end, defaults to current year's December 31st(`YYYY-MM-DD` format).
+  - **`daysOfTheWeek`**: Optional. The days of the week, which will be the head column of each row. The array should start from Sunday so that you can use with `startsOnSunday` option correctly. Defaults to `['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']`.
+  - **`startsOnSunday`**: Optional. Whether to start the calendar on Sunday or not, defaults to `true`. If set to false, calendar will start on Monday.
+  - **`includeBoundary`**: Optional. Whether to include the boundary cells in the starting or ending date column, defaults to `true`.
+- **`styleOptions`**: Optional. Defines options for table or cell's style.
+  - **`textColor`**: Optional. The color of indexes. String color code format, defaults to `#1F2328`.
+  - **`style`**: Optional. Root styles for the ContributionCalendar.
+  - **`theme`**: Optional. A string that represents a predefined theme name, or an object with custom theme colors. Defaults to `grass`.
+  - **`cx`**: Optional. The pixel size of width of each cell, defaults to `10`.
+  - **`cy`**: Optional. The pixel size of height of each cell, defaults to `10`.
+  - **`cr`**: Optional. The pixel size of border radius of each cell, defaults to `2`.
+- **`visibilityOptions`**: Optional. Defines visibility for column or row index visibility.
+  - **`hideDescription`**: Optional. Allows you to hide the description displayed at the bottom of the graph.
+  - **`hideMonthLabels`**: Optional. Allows you to hide the month labels displayed at the top of the graph.
+  - **`hideDayLabels`**: Optional. ALlows you to hide the day labels displayed at the side of the graph.
 - **`scroll`**: Optional. Whether to show scrollbar or not, defaults to `false`.
 - **`onCellClick`**: Optional. An onClick mouse event on each table cell.
-- **`hideDescription`**: Optional. Allows you to hide the description displayed at the bottom of the graph.
-- **`hideMonthLabels`**: Optional. Allows you to hide the month labels displayed at the top of the graph.
-- **`hideDayLabels`**: Optional. ALlows you to hide the day labels displayed at the side of the graph.
 
 <br />
 
@@ -290,7 +299,7 @@ function App() {
     level4: '#216e39',
   })
 
-  return <ContributionCalendar theme={customTheme} />
+  return <ContributionCalendar styleOptions={{ theme: customTheme }} />
 }
 ```
 
@@ -302,13 +311,15 @@ import { ContributionCalendar } from 'react-contribution-calendar'
 function App() {
   return (
     <ContributionCalendar
-      theme={{
-        /* Assign theme properties directly */
-        level0: '#ebedf0',
-        level1: '#9be9a8',
-        level2: '#40c463',
-        level3: '#30a14e',
-        level4: '#216e39',
+      styleOptions={{
+        theme: {
+          /* Assign theme properties directly */
+          level0: '#ebedf0',
+          level1: '#9be9a8',
+          level2: '#40c463',
+          level3: '#30a14e',
+          level4: '#216e39',
+        }
       }}
     />
   )
@@ -323,13 +334,15 @@ import { ContributionCalendar } from 'react-contribution-calendar'
 function App() {
   return (
     <ContributionCalendar
-      theme={{
-        isTextTheme: true, // <--- Must be added if it's a text theme.
-        level0: '🙂',
-        level1: '🤔',
-        level2: '😎',
-        level3: 'A',
-        level4: 'B',
+      styleOptions={{
+        theme: {
+          isTextTheme: true, // <--- Must be added if it's a text theme.
+          level0: '🙂',
+          level1: '🤔',
+          level2: '😎',
+          level3: 'A',
+          level4: 'B',
+        }
       }}
     />
   )
