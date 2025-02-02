@@ -3,13 +3,14 @@
   vertical-align: middle;
   border-color: inherit;
   top: 0;
-  width: fit-content;
+  width: 100%;
 }
 
 .tr {
   display: table-row;
   vertical-align: inherit;
   border-color: inherit;
+  width: 100%;
 }
 
 .dayOfTheWeek {

@@ -11,8 +11,6 @@ interface DescriptionProps {
 
 export default function Description({ textColor, cx, cy, cr, theme }: DescriptionProps) {
   const themeProps = createTheme(theme)
-  const padding = `4px ${cx + 72}px 0 0`
-
   const isEmojiTheme = (theme: string | ThemeProps): boolean => {
     const isCustomTextTheme = typeof theme === 'string' ? false : theme.isTextTheme || false
     return theme === 'emoji_positive' || theme === 'emoji_negative' || isCustomTextTheme
@@ -32,7 +30,7 @@ export default function Description({ textColor, cx, cy, cr, theme }: Descriptio
   }
 
   return (
-    <div className={styles.description} style={{ padding: padding }}>
+    <div className={styles.description}>
       <div className={styles.themes}>
         <span style={{ color: textColor, fontSize: cx }}>Less</span>
         {Array.from({ length: 5 }, (_, i) => i).map((i) => (

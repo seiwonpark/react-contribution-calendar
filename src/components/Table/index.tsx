@@ -1,12 +1,10 @@
-import { CSSProperties } from 'react'
+import { CSSProperties, useMemo, useRef, useEffect, useState } from 'react'
 import TableHead from '../TableHead'
 import TableBody from '../TableBody'
-import { getCurrentYear, getDateString } from '../../utils'
 import Description from '../Description'
 import styles from './index.module.css'
+import { getCurrentYear, getDateString } from '../../utils'
 import { isValidDateFormat, isValidDateRange, isValidDaysOfTheWeek } from '../../validators'
-import { useMemo } from 'react'
-import { useEffect } from 'react'
 
 interface TableDateOptions {
   start?: string
@@ -50,10 +48,6 @@ export default function Table({
 }: TableProps) {
   const start = useMemo(() => dateOptions?.start || getDateString(getCurrentYear(), 0, 1), [dateOptions?.start])
   const end = useMemo(() => dateOptions?.end || getDateString(getCurrentYear(), 11, 31), [dateOptions?.end])
-  const padding = useMemo(
-    () => `0 ${(styleOptions?.cx || 0) + 70}px 0 ${(styleOptions?.cx || 0) + 10}px`,
-    [styleOptions?.cx]
-  )
   const startsOnSunday = useMemo(() => dateOptions?.startsOnSunday || true, [dateOptions?.startsOnSunday])
   const daysOfTheWeek = useMemo(
     () => dateOptions?.daysOfTheWeek || ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -61,6 +55,8 @@ export default function Table({
   )
   const textColor = useMemo(() => styleOptions?.textColor || '#1f2328', [styleOptions?.textColor])
   const includeBoundary = useMemo(() => dateOptions?.includeBoundary || true, [dateOptions?.includeBoundary])
+  const tableRef = useRef<HTMLTableElement>(null)
+  const [tableWidth, setTableWidth] = useState(0)
 
   useEffect(() => {
     isValidDateFormat(start)
@@ -69,10 +65,30 @@ export default function Table({
     isValidDaysOfTheWeek(daysOfTheWeek)
   }, [daysOfTheWeek, start, end])
 
+  useEffect(() => {
+    if (tableRef.current) {
+      const updateWidth = () => {
+        setTableWidth(tableRef.current?.offsetWidth || 0)
+      }
+
+      updateWidth() // 초기 너비 설정
+
+      // ResizeObserver로 테이블 크기 변화 감지
+      const resizeObserver = new ResizeObserver(updateWidth)
+      resizeObserver.observe(tableRef.current)
+
+      return () => {
+        if (tableRef.current) {
+          resizeObserver.unobserve(tableRef.current)
+        }
+      }
+    }
+  }, [])
+
   return (
     <div className={`${styles.base} ${styles.container}`} style={styleOptions?.style}>
-      <div className={styles.calendar} style={{ padding, overflowX: scroll ? 'scroll' : 'clip' }}>
-        <table className={styles.table}>
+      <div className={styles.calendar} style={{ overflowX: scroll ? 'scroll' : 'clip', display: 'block' }}>
+        <table ref={tableRef} className={styles.table}>
           {!visibilityOptions?.hideMonthLabels && (
             <TableHead
               start={start}
@@ -98,16 +114,18 @@ export default function Table({
             hideDayLabels={visibilityOptions?.hideDayLabels || false}
           />
         </table>
+        {!visibilityOptions?.hideDescription && (
+          <div style={{ width: tableWidth }}>
+            <Description
+              textColor={textColor}
+              cx={styleOptions?.cx || 10}
+              cy={styleOptions?.cy || 10}
+              cr={styleOptions?.cr || 2}
+              theme={styleOptions?.theme || 'grass'}
+            />
+          </div>
+        )}
       </div>
-      {!visibilityOptions?.hideDescription && (
-        <Description
-          textColor={textColor}
-          cx={styleOptions?.cx || 10}
-          cy={styleOptions?.cy || 10}
-          cr={styleOptions?.cr || 2}
-          theme={styleOptions?.theme || 'grass'}
-        />
-      )}
     </div>
   )
 }
