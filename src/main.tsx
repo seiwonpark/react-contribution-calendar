@@ -6,7 +6,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ContributionCalendar
       dateOptions={{
-        daysOfTheWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        daysOfTheWeek: ['', 'Mon', '', 'Wed', '', 'Fri', ''],
         startsOnSunday: true,
         includeBoundary: true,
       }}
@@ -16,7 +16,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         cx: 12,
         cy: 12,
         cr: 2,
-        style: {},
       }}
       visibilityOptions={{
         hideDescription: false,
@@ -24,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         hideDayLabels: false,
       }}
       onCellClick={(_, data) => console.log(data)}
-      scroll={false}
+      scroll={true}
     />
   </React.StrictMode>
 )

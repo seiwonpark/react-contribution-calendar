@@ -13,13 +13,16 @@
 }
 
 .container {
-  width: fit-content;
+  width: 100%;
+  max-width: 100%;
 }
 
 .calendar {
   margin: 0;
   display: block;
   white-space: nowrap;
+  width: 100%;
+  max-width: 100%;
 }
 
 .table {
