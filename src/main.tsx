@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         hideMonthLabels: false,
         hideDayLabels: false,
       }}
-      onCellClick={(e, data) => console.log(data)}
+      onCellClick={(_, data) => console.log(data)}
       scroll={true}
     />
   </React.StrictMode>
