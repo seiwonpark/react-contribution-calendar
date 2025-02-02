@@ -26,7 +26,7 @@ const Tooltip = ({ content, offsetX, targetRect, fontSize = 12 }: TooltipProps) 
     pointerEvents: 'none',
     fontSize: `${fontSize}px`,
     left: `${targetRect.left + offsetX}px`,
-    top: `${targetRect.top - 40}px`,
+    top: `${targetRect.top - 16 - fontSize - ~~(fontSize / 10)}px`,
   }
 
   const arrowStyle: CSSProperties = {
@@ -39,7 +39,7 @@ const Tooltip = ({ content, offsetX, targetRect, fontSize = 12 }: TooltipProps) 
     borderTop: '6px solid #25292E',
     pointerEvents: 'none',
     left: `${targetRect.left + targetRect.width / 2 - 6}px`,
-    top: `${targetRect.top - 18}px`,
+    top: `${targetRect.top - 8}px`,
   }
 
   return createPortal(

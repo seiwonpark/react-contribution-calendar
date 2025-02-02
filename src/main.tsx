@@ -11,7 +11,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         includeBoundary: true,
       }}
       styleOptions={{
-        textColor: '#1f2328',
         theme: 'grass',
         cx: 12,
         cy: 12,
