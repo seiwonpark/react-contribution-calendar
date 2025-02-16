@@ -48,13 +48,13 @@ export default function Table({
 }: TableProps) {
   const start = useMemo(() => dateOptions?.start || getDateString(getCurrentYear(), 0, 1), [dateOptions?.start])
   const end = useMemo(() => dateOptions?.end || getDateString(getCurrentYear(), 11, 31), [dateOptions?.end])
-  const startsOnSunday = useMemo(() => dateOptions?.startsOnSunday || true, [dateOptions?.startsOnSunday])
+  const startsOnSunday = useMemo(() => dateOptions?.startsOnSunday ?? true, [dateOptions?.startsOnSunday])
   const daysOfTheWeek = useMemo(
     () => dateOptions?.daysOfTheWeek || ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     [dateOptions?.daysOfTheWeek]
   )
   const textColor = useMemo(() => styleOptions?.textColor || '#1f2328', [styleOptions?.textColor])
-  const includeBoundary = useMemo(() => dateOptions?.includeBoundary || true, [dateOptions?.includeBoundary])
+  const includeBoundary = useMemo(() => dateOptions?.includeBoundary ?? true, [dateOptions?.includeBoundary])
   const tableRef = useRef<HTMLTableElement>(null)
   const [tableWidth, setTableWidth] = useState(0)
 
@@ -111,7 +111,7 @@ export default function Table({
             cr={styleOptions?.cr || 2}
             theme={styleOptions?.theme || 'grass'}
             onClick={onCellClick}
-            hideDayLabels={visibilityOptions?.hideDayLabels || false}
+            hideDayLabels={visibilityOptions?.hideDayLabels ?? false}
           />
         </table>
         {!visibilityOptions?.hideDescription && (
